@@ -88,5 +88,15 @@
     </div>
 
     <script src="/static/script.js"></script>
+    <script>
+        const fonts = ["Arial", "Courier", "Times New Roman", "Verdana"];
+        document.addEventListener("DOMContentLoaded", () => {
+            displayElements();
+        });
+
+        function getFontOptions(selectedFont) {
+            return fonts.map(font => `<option value="${font}" ${font === selectedFont ? 'selected' : ''}>${font}</option>`).join('');
+        }
+    </script>
 </body>
 </html>
