@@ -92,3 +92,9 @@ Structuring the project with dedicated directories for templates and static file
 ```
 
 #### Run the app.py file and enter port 5000 on your localhost, which Flask makes available for viewing the application
+
+## 📜 License
+
+### This project is under the MIT license. 
+<br>
+Developed by Miguel Marsico 👋🏻
