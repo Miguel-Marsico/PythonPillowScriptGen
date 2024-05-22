@@ -1,4 +1,4 @@
-const CM_TO_PX = 37.7952755906; // Conversion factor for cm to px
+const CM_TO_PX = 37.7952755906;
 
 let elements = [];
 let canvas, ctx;
@@ -30,21 +30,22 @@ function addElement(type) {
     if (type === 'text') {
         element.text = 'Hello';
         element.size = 20;
+        element.font = 'Arial';
     } else if (type === 'rectangle') {
-        element.width = 2; // Default width in cm
-        element.height = 1; // Default height in cm
+        element.width = 2; 
+        element.height = 1; 
         element.border_width = 2;
     } else if (type === 'circle') {
-        element.width = 1.5; // Default width in cm
-        element.height = 1.5; // Default height in cm
+        element.width = 1.5; 
+        element.height = 1.5; 
         element.border_width = 2;
     } else if (type === 'line') {
-        element.length = 2.5; // Default length in cm
+        element.length = 2.5; 
         element.rotation = 0;
-        element.width = 2;
+        element.thickness = 2; 
     } else if (type === 'triangle') {
-        element.width = 2; // Default width in cm
-        element.height = 1.5; // Default height in cm
+        element.width = 2; 
+        element.height = 1.5; 
         element.border_width = 2;
     }
     elements.push(element);
@@ -61,10 +62,12 @@ function displayElements() {
             <input type="color" value="${element.color}" onchange="updateElement(${index}, 'color', this.value)">
             ${element.type === 'text' ? `<input type="text" value="${element.text || ''}" placeholder="Text" onchange="updateElement(${index}, 'text', this.value)">` : ''}
             ${element.type === 'text' ? `<input type="number" value="${element.size || ''}" placeholder="Size" onchange="updateElement(${index}, 'size', this.value)">` : ''}
+            ${element.type === 'text' ? `<select onchange="updateElement(${index}, 'font', this.value)">${getFontOptions(element.font)}</select>` : ''}
             ${element.type === 'rectangle' || element.type === 'circle' || element.type === 'triangle' ? `<input type="number" value="${element.width || ''}" placeholder="Width (cm)" onchange="updateElement(${index}, 'width', this.value)">` : ''}
             ${element.type === 'rectangle' || element.type === 'circle' || element.type === 'triangle' ? `<input type="number" value="${element.height || ''}" placeholder="Height (cm)" onchange="updateElement(${index}, 'height', this.value)">` : ''}
             ${element.type === 'line' ? `<input type="number" value="${element.length || ''}" placeholder="Length (cm)" onchange="updateElement(${index}, 'length', this.value)">` : ''}
             ${element.type === 'line' ? `<input type="number" value="${element.rotation || ''}" placeholder="Rotation" onchange="updateElement(${index}, 'rotation', this.value)">` : ''}
+            ${element.type === 'line' ? `<input type="number" value="${element.thickness || ''}" placeholder="Thickness" onchange="updateElement(${index}, 'thickness', this.value)">` : ''}
             <button class="icon-button" onclick="removeElement(${index})" title="Remove Element">
                 <i class="fas fa-trash"></i>
             </button>
@@ -89,7 +92,7 @@ function drawElements() {
         ctx.fillStyle = element.color;
         ctx.strokeStyle = element.color;
         if (element.type === 'text') {
-            ctx.font = `${element.size}px Arial`;
+            ctx.font = `${element.size}px ${element.font}`;
             ctx.fillText(element.text, element.x, element.y);
         } else if (element.type === 'rectangle') {
             ctx.lineWidth = element.border_width;
@@ -102,7 +105,7 @@ function drawElements() {
         } else if (element.type === 'line') {
             const endX = element.x + (element.length * CM_TO_PX) * Math.cos(element.rotation * Math.PI / 180);
             const endY = element.y + (element.length * CM_TO_PX) * Math.sin(element.rotation * Math.PI / 180);
-            ctx.lineWidth = element.width;
+            ctx.lineWidth = element.thickness;
             ctx.beginPath();
             ctx.moveTo(element.x, element.y);
             ctx.lineTo(endX, endY);
@@ -157,7 +160,7 @@ function isElementClicked(element, x, y) {
         const endY = element.y + (element.length * CM_TO_PX) * Math.sin(element.rotation * Math.PI / 180);
         const distance = Math.abs((endY - element.y) * x - (endX - element.x) * y + endX * element.y - endY * element.x) /
                          Math.sqrt(Math.pow(endY - element.y, 2) + Math.pow(endX - element.x, 2));
-        return distance < element.width;
+        return distance < element.thickness;
     } else if (element.type === 'triangle') {
         const [x1, y1] = [element.x, element.y];
         const [x2, y2] = [element.x + element.width * CM_TO_PX, element.y];
