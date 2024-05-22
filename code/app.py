@@ -3,7 +3,7 @@ import math
 
 app = Flask(__name__)
 
-CM_TO_PX = 37.7952755906  # Conversão de cm para pixels
+CM_TO_PX = 37.7952755906
 
 @app.route('/')
 def index():
@@ -20,7 +20,7 @@ def generate_pillow_script(data):
     height = round(float(data['height']) * CM_TO_PX)
     elements = data['elements']
 
-    script = f"""from PIL import Image, ImageDraw
+    script = f"""from PIL import Image, ImageDraw, ImageFont
 
 image = Image.new('RGB', ({width}, {height}), 'white')
 draw = ImageDraw.Draw(image)
@@ -36,10 +36,12 @@ draw = ImageDraw.Draw(image)
         element['length'] = round(float(element.get('length', 0)) * CM_TO_PX)
         element['rotation'] = round(float(element.get('rotation', 0)))
         element['size'] = round(float(element.get('size', 0)))
+        element['thickness'] = round(float(element.get('thickness', 1)))
 
         if element['type'] == 'text':
             script += f"""
-draw.text(({element['x']}, {element['y']}), "{element['text']}", fill="{element['color']}")
+font = ImageFont.truetype("{element['font']}", {element['size']})
+draw.text(({element['x']}, {element['y']}), "{element['text']}", fill="{element['color']}", font=font)
 """
         elif element['type'] == 'rectangle':
             script += f"""
@@ -50,17 +52,16 @@ draw.rectangle([{element['x']}, {element['y']}, {element['x'] + element['width']
 draw.ellipse([{element['x']}, {element['y']}, {element['x'] + element['width']}, {element['y'] + element['height']}], outline="{element['color']}", width={element['border_width']})
 """
         elif element['type'] == 'line':
+            x2 = element['x'] + element['length'] * math.cos(math.radians(element['rotation']))
+            y2 = element['y'] + element['length'] * math.sin(math.radians(element['rotation']))
             script += f"""
-x2 = {element['x']} + {element['length']} * math.cos(math.radians({element['rotation']}))
-y2 = {element['y']} + {element['length']} * math.sin(math.radians({element['rotation']}))
-draw.line([{element['x']}, {element['y']}, x2, y2], fill="{element['color']}", width={element['width']})
+draw.line([{element['x']}, {element['y']}, {x2}, {y2}], fill="{element['color']}", width={element['thickness']})
 """
         elif element['type'] == 'triangle':
             script += f"""
 draw.polygon([{element['x']}, {element['y']}, {element['x'] + element['width']}, {element['y']}, {element['x'] + element['width'] / 2}, {element['y'] - element['height']}], outline="{element['color']}", width={element['border_width']})
 """
-        # Add more element types as needed.
-
+            
     script += """
 image.show()
 """
