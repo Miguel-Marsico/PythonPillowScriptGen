@@ -1,5 +1,7 @@
 # Python Pillow Script Generator
 
+![PillowScriptGen github ‐ Feito com o Clipchamp](https://github.com/Miguel-Marsico/Customer-Service-ChatBot/assets/158609724/ab84c031-3796-4259-a17b-2a50d818053b)
+
 Tutorial in Portuguese: [https://youtu.be/Urktgr6w1C0](url)
 
 ## 📋 Topics
