@@ -2,7 +2,7 @@
 
 ![PillowScriptGen github ‐ Feito com o Clipchamp](https://github.com/Miguel-Marsico/Customer-Service-ChatBot/assets/158609724/ab84c031-3796-4259-a17b-2a50d818053b)
 
-Tutorial in Portuguese: [https://youtu.be/Urktgr6w1C0](url)
+Tutorial in Portuguese: [Youtube Link](https://www.youtube.com/watch?v=Urktgr6w1C0&t=5s)
 
 ## 📋 Topics
 <div>
