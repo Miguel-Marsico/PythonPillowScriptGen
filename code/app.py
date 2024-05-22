@@ -5,6 +5,13 @@ app = Flask(__name__)
 
 CM_TO_PX = 37.7952755906
 
+FONT_PATHS = {
+    "Arial": "C:/Windows/Fonts/Arial.ttf",
+    "Courier": "C:/Windows/Fonts/cour.ttf",
+    "Times New Roman": "C:/Windows/Fonts/times.ttf",
+    "Verdana": "C:/Windows/Fonts/verdana.ttf"
+}
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -39,8 +46,9 @@ draw = ImageDraw.Draw(image)
         element['thickness'] = round(float(element.get('thickness', 1)))
 
         if element['type'] == 'text':
+            font_path = FONT_PATHS.get(element['font'], "C:/Windows/Fonts/Arial.ttf")
             script += f"""
-font = ImageFont.truetype("{element['font']}", {element['size']})
+font = ImageFont.truetype("{font_path}", {element['size']})
 draw.text(({element['x']}, {element['y']}), "{element['text']}", fill="{element['color']}", font=font)
 """
         elif element['type'] == 'rectangle':
@@ -61,7 +69,7 @@ draw.line([{element['x']}, {element['y']}, {x2}, {y2}], fill="{element['color']}
             script += f"""
 draw.polygon([{element['x']}, {element['y']}, {element['x'] + element['width']}, {element['y']}, {element['x'] + element['width'] / 2}, {element['y'] - element['height']}], outline="{element['color']}", width={element['border_width']})
 """
-            
+
     script += """
 image.show()
 """
