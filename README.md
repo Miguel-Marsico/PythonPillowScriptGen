@@ -54,7 +54,7 @@ Structuring the project with dedicated directories for templates and static file
  - 🌐 **Frontend** (WebSite HTML, JavaScript)
  - ⚙️ **Backend** (Python API)
  
- 💡 In this case, when running the api, the frontend will work normally
+ 💡 In this case, when running the API, the frontend will work normally on port 5000 of your localhost
  
  💡 Using a Python virtual environment (venv) is essential to isolate and manage project dependencies in a secure and reproducible manner.
 
@@ -91,4 +91,4 @@ Structuring the project with dedicated directories for templates and static file
   import math
 ```
 
-#### Run the app.py file and enter the localhost url on port 5000 that Flask makes available for viewing the application
+#### Run the app.py file and enter port 5000 on your localhost, which Flask makes available for viewing the application
