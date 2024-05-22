@@ -32,20 +32,20 @@ function addElement(type) {
         element.size = 20;
         element.font = 'Arial';
     } else if (type === 'rectangle') {
-        element.width = 2; 
-        element.height = 1; 
+        element.width = 2;
+        element.height = 1;
         element.border_width = 2;
     } else if (type === 'circle') {
-        element.width = 1.5; 
-        element.height = 1.5; 
+        element.width = 1.5;
+        element.height = 1.5;
         element.border_width = 2;
     } else if (type === 'line') {
-        element.length = 2.5; 
+        element.length = 2.5;
         element.rotation = 0;
-        element.thickness = 2; 
+        element.thickness = 2;
     } else if (type === 'triangle') {
-        element.width = 2; 
-        element.height = 1.5; 
+        element.width = 2;
+        element.height = 1.5;
         element.border_width = 2;
     }
     elements.push(element);
